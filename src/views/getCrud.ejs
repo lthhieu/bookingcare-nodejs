@@ -1,0 +1,59 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Crud</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>first name</th>
+            <th>Last name</th>
+            <th>Address</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <% for(let i=0; i < data.length; i++) { %>
+            <tr>
+                <td>
+                    <%= data[i].email %>
+                </td>
+                <td>
+                    <%= data[i].fNameVi %>
+                </td>
+                <td>
+                    <%= data[i].lNameVi %>
+                </td>
+                <td>
+                    <%= data[i].addressVi %>
+                </td>
+                <td><a href="/edit-crud?id=<%=data[i].id%>">Update</a></td>
+                <td><a href="/delete-crud?id=<%=data[i].id%>">Delete</a></td>
+            </tr>
+            <% } %>
+
+    </table>
+</body>
+
+</html>

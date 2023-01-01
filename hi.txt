@@ -1,0 +1,7 @@
+body-parser: viết api, giúp lấy tham số từ client gửi lên server
+dotenv: giúp lấy các tham số khai báo trong file môi trường .env
+ejs: view-engine, muốn chạy một màn hình từ phía server phải có view-engine
+@babel/core @babel/node @babel/preset-env: compiler js
+nodemon: tự động restart server khi có sự thay đổi
+
+npm install body-parser dotenv ejs @babel/core @babel/node @babel/preset-env nodemon
