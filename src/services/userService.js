@@ -19,7 +19,7 @@ let handleUserLogin = (email, password) => {
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email },
-                    attributes: ['email', 'roleId', 'password']
+                    attributes: ['email', 'roleId', 'password', 'fNameVi', 'lNameVi', 'fNameEn', 'lNameEn']
                 })
                 if (user) {
                     let checkPassword = bcrypt.compareSync(password, user.password)
@@ -76,7 +76,7 @@ let getAllUsersOrSingleUser = (id) => {
 let createNewUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { fNameVi, fNameEn, lNameVi, lNameEn, email, password, addressVi, addressEn, phoneNo, gender, roleId } = data
+            let { fNameVi, fNameEn, lNameVi, lNameEn, email, password, addressVi, addressEn, phoneNo, gender, roleId, positionId, image } = data
             let checkEmail = await checkUserEmail(email)
             if (checkEmail) {
                 resolve({
@@ -85,7 +85,7 @@ let createNewUser = (data) => {
                 })
             } else {
                 let hashUserPassword = await hashPassword(password)
-                await db.User.create({ fNameVi, fNameEn, lNameVi, lNameEn, email, password: hashUserPassword, addressVi, addressEn, phoneNo, gender: Number(gender) === 1 ? true : false, roleId })
+                await db.User.create({ fNameVi, fNameEn, lNameVi, lNameEn, email, password: hashUserPassword, addressVi, addressEn, phoneNo, gender, roleId, positionId, image })
                 resolve({
                     errCode: '0',
                     msg: 'Created successfully'
@@ -122,7 +122,7 @@ let search = (emailKey, myArray) => {
 let updateUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { id, fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId } = data
+            let { id, fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId, positionId } = data
             if (!id) {
                 resolve({
                     errCode: '1',
@@ -139,7 +139,7 @@ let updateUser = (data) => {
                 let emails = await db.User.findAll({ attributes: ['email'] })
                 if (email === user.email || !search(email, emails)) {
                     await db.User.update(
-                        { fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId }, {
+                        { fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId, positionId }, {
                         where: { id }
                     })
                     resolve({
@@ -156,10 +156,32 @@ let updateUser = (data) => {
         } catch (e) { reject(e) }
     })
 }
+let getAllcode = (type) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let res = {}
+            if (!type) {
+                res.errCode = '1'
+                res.msg = 'Missing param'
+            } else {
+                let data = await db.Allcode.findAll({
+                    where: { type }
+                })
+                res.errCode = '0'
+                res.data = data
+            }
+
+            resolve(res)
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
     handleUserLogin,
     getAllUsersOrSingleUser,
     createNewUser,
     deleteUser,
-    updateUser
+    updateUser,
+    getAllcode
 }

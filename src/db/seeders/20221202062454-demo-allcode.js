@@ -143,6 +143,27 @@ module.exports = {
       valueVi: 'Giáo sư',
       createdAt: new Date(),
       updatedAt: new Date()
+    }, {
+      key: 'M',
+      type: 'gender',
+      valueEn: 'Male',
+      valueVi: 'Nam',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      key: 'F',
+      type: 'gender',
+      valueEn: 'Female',
+      valueVi: 'Nữ',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      key: 'O',
+      type: 'gender',
+      valueEn: 'Other',
+      valueVi: 'Khác',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }]);
   },
 

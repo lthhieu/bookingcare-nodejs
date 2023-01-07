@@ -38,7 +38,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       gender: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING,
+        references: {
+          model: 'Allcodes',
+          key: 'key'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       image: {
         type: Sequelize.STRING
