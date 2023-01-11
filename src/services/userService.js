@@ -76,7 +76,7 @@ let getAllUsersOrSingleUser = (id) => {
 let createNewUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { fNameVi, fNameEn, lNameVi, lNameEn, email, password, addressVi, addressEn, phoneNo, gender, roleId, positionId, image } = data
+            let { fNameVi, fNameEn, lNameVi, lNameEn, email, password, addressVi, addressEn, phoneNo, genderId, roleId, positionId, image } = data
             let checkEmail = await checkUserEmail(email)
             if (checkEmail) {
                 resolve({
@@ -85,7 +85,7 @@ let createNewUser = (data) => {
                 })
             } else {
                 let hashUserPassword = await hashPassword(password)
-                await db.User.create({ fNameVi, fNameEn, lNameVi, lNameEn, email, password: hashUserPassword, addressVi, addressEn, phoneNo, gender, roleId, positionId, image })
+                await db.User.create({ fNameVi, fNameEn, lNameVi, lNameEn, email, password: hashUserPassword, addressVi, addressEn, phoneNo, genderId, roleId, positionId, image })
                 resolve({
                     errCode: '0',
                     msg: 'Created successfully'
@@ -122,7 +122,7 @@ let search = (emailKey, myArray) => {
 let updateUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { id, fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId, positionId } = data
+            let { id, fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, genderId, roleId, positionId, image } = data
             if (!id) {
                 resolve({
                     errCode: '1',
@@ -139,7 +139,7 @@ let updateUser = (data) => {
                 let emails = await db.User.findAll({ attributes: ['email'] })
                 if (email === user.email || !search(email, emails)) {
                     await db.User.update(
-                        { fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, gender, roleId, positionId }, {
+                        { fNameVi, fNameEn, lNameVi, lNameEn, email, addressVi, addressEn, phoneNo, genderId, roleId, positionId, image }, {
                         where: { id }
                     })
                     resolve({

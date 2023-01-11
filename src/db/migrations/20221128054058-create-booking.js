@@ -16,13 +16,19 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'Allcodes',
-          key: 'key'
+          key: 'keyMap'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
       statusId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'Allcodes',
+          key: 'keyMap'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       doctorId: {
         type: Sequelize.INTEGER,

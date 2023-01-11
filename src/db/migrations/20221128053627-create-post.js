@@ -10,16 +10,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       contentHtmlVi: {
-        type: Sequelize.TEXT
+        allowNull: false,
+        type: Sequelize.TEXT('long')
       },
       contentHtmlEn: {
-        type: Sequelize.TEXT
+        allowNull: false,
+        type: Sequelize.TEXT('long')
+      },
+      description: {
+        type: Sequelize.STRING
       },
       contentMarkDownVi: {
-        type: Sequelize.TEXT
+        allowNull: false,
+        type: Sequelize.TEXT('long')
       },
       contentMarkDownEn: {
-        type: Sequelize.TEXT
+        allowNull: false,
+        type: Sequelize.TEXT('long')
       },
       doctorId: {
         type: Sequelize.INTEGER,

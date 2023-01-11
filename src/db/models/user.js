@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsTo(models.Allcode, { foreignKey: 'positionId', targetKey: 'keyMap', as: 'positionData' })
+      User.belongsTo(models.Allcode, { foreignKey: 'genderId', targetKey: 'keyMap', as: 'genderData' })
+      User.belongsTo(models.Allcode, { foreignKey: 'roleId', targetKey: 'keyMap', as: 'roleData' })
+      User.belongsTo(models.Doctor_Clinic_Specialty, { foreignKey: 'id', targetKey: 'doctorId', as: 'userData' })
+      User.hasMany(models.History, { foreignKey: 'doctorId', as: 'userHistorydoctorIdData' })
+      User.hasMany(models.History, { foreignKey: 'patientId', as: 'userHistorypatientIdData' })
+      User.hasMany(models.Post, { foreignKey: 'doctorId', as: 'userPostData' })
+      User.hasMany(models.Schedule, { foreignKey: 'doctorId', as: 'userScheduleDoctorIdData' })
+      User.hasMany(models.Booking, { foreignKey: 'doctorId', as: 'userBookingDoctorIdData' })
+      User.hasMany(models.Booking, { foreignKey: 'patientId', as: 'userBookingpatientIdData' })
     }
   }
   User.init({
@@ -23,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     addressVi: DataTypes.STRING,
     addressEn: DataTypes.STRING,
     phoneNo: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    image: DataTypes.STRING,
+    genderId: DataTypes.STRING,
+    image: DataTypes.BLOB('long'),
     roleId: DataTypes.STRING,
     positionId: DataTypes.STRING
   }, {

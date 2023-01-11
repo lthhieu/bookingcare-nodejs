@@ -1,6 +1,7 @@
 import express from 'express'
 import homeController from '../controllers/homeController'
 import userController from '../controllers/userController'
+import doctorController from '../controllers/doctorController'
 
 let router = express.Router()
 
@@ -20,8 +21,9 @@ let initWebRoutes = (app) => {
     router.post('/api/create-new-users', userController.handleCreateNewUser)
     router.put('/api/update-users', userController.handleUpdateUser)
     router.delete('/api/delete-users', userController.handleDeleteUser)
-
     router.get('/api/get-all-code', userController.hanldeGetAllcode)
+
+    router.get('/api/fetch-doctor-home', doctorController.fetchDoctor)
 
     return app.use('/', router)
 }

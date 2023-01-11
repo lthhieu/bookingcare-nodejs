@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Post.belongsTo(models.Clinic, { foreignKey: 'clinicId', targetKey: 'id', as: 'clinicPostData' })
+      Post.belongsTo(models.User, { foreignKey: 'doctorId', targetKey: 'id', as: 'userPostData' })
+      Post.belongsTo(models.Specialty, { foreignKey: 'specialtyId', targetKey: 'id', as: 'specialtyPostData' })
     }
   }
   Post.init({
-    contentHtmlVi: DataTypes.TEXT,
-    contentHtmlEn: DataTypes.TEXT,
-    contentMarkDownVi: DataTypes.TEXT,
-    contentMarkDownEn: DataTypes.TEXT,
+    contentHtmlVi: DataTypes.TEXT('long'),
+    contentHtmlEn: DataTypes.TEXT('long'),
+    description: DataTypes.STRING,
+    contentMarkDownVi: DataTypes.TEXT('long'),
+    contentMarkDownEn: DataTypes.TEXT('long'),
     doctorId: DataTypes.INTEGER,
     clinicId: DataTypes.INTEGER,
     specialtyId: DataTypes.INTEGER

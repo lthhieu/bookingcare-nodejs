@@ -11,10 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Allcode.hasMany(models.User, { foreignKey: 'positionId', as: 'positionData' })
+      Allcode.hasMany(models.User, { foreignKey: 'genderId', as: 'genderData' })
+      Allcode.hasMany(models.User, { foreignKey: 'roleId', as: 'roleData' })
+      Allcode.hasMany(models.Booking, { foreignKey: 'statusId', as: 'statusBookingData' })
+      Allcode.hasMany(models.Booking, { foreignKey: 'time', as: 'timeBookingData' })
+      Allcode.hasMany(models.Schedule, { foreignKey: 'time', as: 'timeScheduleData' })
     }
   }
   Allcode.init({
-    key: DataTypes.STRING,
+    keyMap: DataTypes.STRING,
     type: DataTypes.STRING,
     valueEn: DataTypes.STRING,
     valueVi: DataTypes.STRING

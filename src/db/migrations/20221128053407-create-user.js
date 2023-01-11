@@ -37,23 +37,23 @@ module.exports = {
       phoneNo: {
         type: Sequelize.STRING
       },
-      gender: {
+      genderId: {
         type: Sequelize.STRING,
         references: {
           model: 'Allcodes',
-          key: 'key'
+          key: 'keyMap'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.BLOB('long')
       },
       roleId: {
         type: Sequelize.STRING,
         references: {
           model: 'Allcodes',
-          key: 'key'
+          key: 'keyMap'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
@@ -62,7 +62,7 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'Allcodes',
-          key: 'key'
+          key: 'keyMap'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
