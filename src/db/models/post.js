@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   Post.init({
     contentHtmlVi: DataTypes.TEXT('long'),
     contentHtmlEn: DataTypes.TEXT('long'),
-    description: DataTypes.STRING,
+    descriptionVi: DataTypes.TEXT('long'),
+    descriptionEn: DataTypes.TEXT('long'),
     contentMarkDownVi: DataTypes.TEXT('long'),
     contentMarkDownEn: DataTypes.TEXT('long'),
     doctorId: DataTypes.INTEGER,

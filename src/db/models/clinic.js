@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Clinic.belongsTo(models.Doctor_Clinic_Specialty, { foreignKey: 'id', targetKey: 'clinicId', as: 'clinicData' })
-      Clinic.hasMany(models.Post, { foreignKey: 'clinicId', as: 'clinicPostData' })
+      Clinic.hasOne(models.Post, { foreignKey: 'clinicId', as: 'clinicPostData' })
     }
   }
   Clinic.init({

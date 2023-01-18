@@ -23,7 +23,12 @@ let initWebRoutes = (app) => {
     router.delete('/api/delete-users', userController.handleDeleteUser)
     router.get('/api/get-all-code', userController.hanldeGetAllcode)
 
-    router.get('/api/fetch-doctor-home', doctorController.fetchDoctor)
+    router.get('/api/fetch-doctor-home', doctorController.fetchDoctorHome)
+    router.get('/api/get-name-all-doctors', doctorController.getNameAllDoctors)
+    router.post('/api/create-or-update-doctor-info', doctorController.createOrUpdateDoctorInfo)
+    router.get('/api/fetch-doctor-detail-info-by-id', doctorController.fetchDoctorDetailInfoByID)
+    router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule)
+
 
     return app.use('/', router)
 }

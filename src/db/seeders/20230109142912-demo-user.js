@@ -32,7 +32,7 @@ module.exports = {
       phoneNo: '',
       genderId: 'F',
       image: '',
-      roleId: 'R2',
+      roleId: 'R1',
       positionId: 'P4',
       createdAt: new Date(),
       updatedAt: new Date()

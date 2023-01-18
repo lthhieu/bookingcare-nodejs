@@ -17,8 +17,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT('long')
       },
-      description: {
-        type: Sequelize.STRING
+      descriptionVi: {
+        type: Sequelize.TEXT('long')
+      },
+      descriptionEn: {
+        type: Sequelize.TEXT('long')
       },
       contentMarkDownVi: {
         allowNull: false,
