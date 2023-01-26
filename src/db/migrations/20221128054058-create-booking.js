@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       time: {
         type: Sequelize.STRING,
@@ -47,6 +47,9 @@ module.exports = {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
+      },
+      token: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

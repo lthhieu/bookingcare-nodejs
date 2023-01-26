@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Schedule, { foreignKey: 'doctorId', as: 'userScheduleDoctorIdData' })
       User.hasMany(models.Booking, { foreignKey: 'doctorId', as: 'userBookingDoctorIdData' })
       User.hasMany(models.Booking, { foreignKey: 'patientId', as: 'userBookingpatientIdData' })
+      User.hasOne(models.Doctor_Info, { foreignKey: 'doctorId', as: 'doctorInfoData' })
     }
   }
   User.init({

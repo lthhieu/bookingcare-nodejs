@@ -17,7 +17,7 @@ let fetchDoctorHome = async (req, res) => {
 
 let getNameAllDoctors = async (req, res) => {
     try {
-        let data = await doctorService.getNameAllDoctorsService()
+        let data = await doctorService.getNameAllDoctorsService(req.query)
         return res.status(200).json(data)
     } catch (e) {
         console.log(e)
@@ -30,6 +30,30 @@ let getNameAllDoctors = async (req, res) => {
 let createOrUpdateDoctorInfo = async (req, res) => {
     try {
         let data = await doctorService.createOrUpdateDoctorInfoService(req.body)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: '-1',
+            msg: 'Error from server..'
+        })
+    }
+}
+let fetchDoctorDetail = async (req, res) => {
+    try {
+        let data = await doctorService.fetchDoctorDetailService(req.query)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: '-1',
+            msg: 'Error from server..'
+        })
+    }
+}
+let fetchDoctorProfile = async (req, res) => {
+    try {
+        let data = await doctorService.fetchDoctorProfileService(req.query)
         return res.status(200).json(data)
     } catch (e) {
         console.log(e)
@@ -63,7 +87,31 @@ let bulkCreateSchedule = async (req, res) => {
         })
     }
 }
+let fetchDoctorSchedule = async (req, res) => {
+    try {
+        let data = await doctorService.fetchDoctorScheduleService(req.query)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: '-1',
+            msg: 'Error from server..'
+        })
+    }
+}
+let fetchDoctorInfo = async (req, res) => {
+    try {
+        let data = await doctorService.fetchDoctorInfoService(req.query)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: '-1',
+            msg: 'Error from server..'
+        })
+    }
+}
 module.exports = {
     fetchDoctorHome, getNameAllDoctors, createOrUpdateDoctorInfo, fetchDoctorDetailInfoByID,
-    bulkCreateSchedule
+    bulkCreateSchedule, fetchDoctorSchedule, fetchDoctorInfo, fetchDoctorDetail, fetchDoctorProfile
 }

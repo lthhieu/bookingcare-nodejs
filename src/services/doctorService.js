@@ -1,6 +1,5 @@
 import db from '../db/models/index'
 import * as utils from '../utils'
-
 import dotenv from 'dotenv'
 dotenv.config()
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE
@@ -29,55 +28,160 @@ let fetchDoctorHomeService = (limit) => {
     })
 }
 
-let getNameAllDoctorsService = () => {
+let getNameAllDoctorsService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let doctors = await db.User.findAll({
-                where: { roleId: 'R2' },
-                order: [['lNameEn', 'ASC']],
-                attributes: { exclude: ['password', 'image'] },
-            })
-            resolve({
-                errCode: '0',
-                data: doctors
-            })
+            let id = data.id
+            if (!id) {
+                let data = await db.User.findAll({
+                    where: { roleId: 'R2' },
+                    order: [['lNameEn', 'ASC']],
+                    attributes: ['fNameVi', 'lNameVi', 'fNameEn', 'lNameEn', 'id'],
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
+            } else {
+                let data = await db.User.findOne({
+                    where: { id },
+                    attributes: ['fNameVi', 'lNameVi', 'fNameEn', 'lNameEn', 'id']
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
+            }
         } catch (e) { reject(e) }
     })
 }
 let createOrUpdateDoctorInfoService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { doctorId, contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, action } = data
-            if (!(doctorId || contentHtmlVi || contentHtmlEn || contentMarkDownVi || contentMarkDownEn || action)) {
+            let { doctorId, contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, action, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn, priceId, paymentId, provinceId } = data
+            if (!(doctorId && contentHtmlVi && contentHtmlEn && contentMarkDownVi && contentMarkDownEn && action && nameClinicVi && nameClinicEn && addressClinicVi && addressClinicEn && noteVi && noteEn && priceId && paymentId && provinceId)) {
                 resolve({
                     errCode: '1',
                     msg: 'Missing params'
                 })
             } else {
+                //upsert to posts table
                 if (action === utils.CRUD.CREATE) {
                     await db.Post.create({ contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, doctorId })
+                    await db.Doctor_Info.create({ doctorId, priceId, provinceId, paymentId, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn })
                     resolve({
                         errCode: '0',
                         msg: utils.ALERTS.CREATE
                     })
                 } else if (action === utils.CRUD.UPDATE) {
                     let post = await db.Post.findOne({ where: { doctorId } })
+                    let doctor_info = await db.Doctor_Info.findOne({ where: { doctorId } })
                     if (!post) {
                         resolve({
                             errCode: '1',
-                            msg: 'Cannot found this post'
+                            msg: 'Cannot found this post and doctor_info'
                         })
                     } else {
                         await db.Post.update(
                             { contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn }, {
                             where: { doctorId }
                         })
+                        if (!doctor_info) {
+                            await db.Doctor_Info.create({ doctorId, priceId, provinceId, paymentId, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn })
+                        } else {
+                            await db.Doctor_Info.update(
+                                { priceId, provinceId, paymentId, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn }, {
+                                where: { doctorId }
+                            })
+                        }
                         resolve({
                             errCode: '0',
                             msg: utils.ALERTS.UPDATE
                         })
                     }
                 }
+            }
+        } catch (e) { reject(e) }
+    })
+}
+let fetchDoctorDetailService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctorId = data.doctorId
+            if (!doctorId) {
+                resolve({
+                    errCode: '1',
+                    msg: 'Missing params'
+                })
+            } else {
+                let data = await db.Post.findOne({
+                    where: { doctorId },
+                    attributes: ['contentHtmlVi', 'contentHtmlEn']
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
+            }
+        } catch (e) { reject(e) }
+    })
+}
+let fetchDoctorProfileService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let id = data.id
+            if (!id) {
+                resolve({
+                    errCode: '1',
+                    msg: 'Missing params'
+                })
+            } else {
+                let data = await db.User.findOne({
+                    where: { id },
+                    attributes: ['fNameVi', 'fNameEn', 'lNameVi', 'lNameEn', 'image', 'positionId'],
+                    include: [{ model: db.Post, as: 'userPostData', attributes: ['descriptionVi', 'descriptionEn'] },
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] }],
+                    raw: false,
+                    nest: true
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
+            }
+        } catch (e) { reject(e) }
+    })
+}
+let fetchDoctorInfoService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctorId = data.doctorId
+            if (!doctorId) {
+                resolve({
+                    errCode: '1',
+                    msg: 'Missing params'
+                })
+            } else {
+                let data = await db.Doctor_Info.findOne({
+                    where: { doctorId },
+                    attributes: ['priceId', 'provinceId', 'paymentId', 'nameClinicVi', 'nameClinicEn', 'addressClinicVi', 'addressClinicEn', 'noteVi', 'noteEn'],
+                    include: [
+                        { model: db.Allcode, as: 'priceDoctorData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi'] }
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
             }
         } catch (e) { reject(e) }
     })
@@ -92,19 +196,31 @@ let fetchDoctorDetailInfoByIDService = (data) => {
                     msg: 'Cannot found ID'
                 })
             } else {
-                let res = await db.User.findOne({
+                let data = await db.User.findOne({
                     where: { id },
                     attributes: { exclude: ['password'] },
                     include: [
+                        //1 api: get contentHtmlVi, contentHtmlEn
                         { model: db.Post, as: 'userPostData', attributes: ['contentHtmlVi', 'contentHtmlEn', 'descriptionVi', 'descriptionEn', 'contentMarkDownVi', 'contentMarkDownEn'] },
-                        { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] }
+                        //1 api: get contentHtmlVi, contentHtmlEn
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] },
+                        {
+                            //1 api: get priceVi,priceEn, addressVi,addressEn, nameclinicVi,nameclinicEn,noteVi,noveEn
+                            model: db.Doctor_Info, as: 'doctorInfoData', attributes: ['priceId', 'provinceId', 'paymentId', 'nameClinicVi', 'nameClinicEn', 'addressClinicVi', 'addressClinicEn', 'noteVi', 'noteEn'],
+                            include: [{ model: db.Allcode, as: 'priceDoctorData', attributes: ['valueVi', 'valueEn'] },
+                            { model: db.Allcode, as: 'provinceData', attributes: ['valueVi', 'valueEn'] },
+                            { model: db.Allcode, as: 'paymentData', attributes: ['valueVi', 'valueEn'] }
+                            ]
+                            //1 api: get priceVi,priceEn, addressVi,addressEn, nameclinicVi,nameclinicEn,noteVi,noveEn
+                        }
                     ],
                     raw: false,
                     nest: true
                 })
+                if (!data) data = []
                 resolve({
                     errCode: '0',
-                    data: res
+                    data
                 })
             }
         } catch (e) { reject(e) }
@@ -144,7 +260,46 @@ let bulkCreateScheduleService = (data) => {
         } catch (e) { reject(e) }
     })
 }
+let fetchDoctorScheduleService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let doctorId = data.doctorId
+            let date = data.date
+            if (!(doctorId && date)) {
+                resolve({
+                    errCode: '1',
+                    msg: 'Missing params'
+                })
+            } else {
+                let data = await db.Schedule.findAll({
+                    where: { doctorId, date },
+                    attributes: ['curNo', 'maxNo', 'date', 'time'],
+                    include: [
+                        { model: db.Allcode, as: 'timeScheduleData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.User, as: 'userScheduleDoctorIdData', attributes: ['fNameVi', 'fNameEn', 'lNameVi', 'lNameEn'],
+                            include: [{
+                                model: db.Doctor_Info, as: 'doctorInfoData', attributes: ['priceId'], include: [
+                                    { model: db.Allcode, as: 'priceDoctorData', attributes: ['valueEn', 'valueVi'] }
+                                ]
+                            }]
+                        }
+                    ],
+                    raw: false,
+                    nest: true
+                })
+                if (!data) data = []
+                resolve({
+                    errCode: '0',
+                    data
+                })
+            }
+        } catch (e) { reject(e) }
+    })
+}
+
 module.exports = {
     fetchDoctorHomeService, getNameAllDoctorsService, createOrUpdateDoctorInfoService,
-    fetchDoctorDetailInfoByIDService, bulkCreateScheduleService
+    fetchDoctorDetailInfoByIDService, bulkCreateScheduleService, fetchDoctorScheduleService,
+    fetchDoctorInfoService, fetchDoctorDetailService, fetchDoctorProfileService
 }

@@ -164,6 +164,146 @@ module.exports = {
       valueVi: 'Khác',
       createdAt: new Date(),
       updatedAt: new Date()
+    }, {
+      keyMap: 'PRI1',
+      type: 'price',
+      valueEn: '200.000',
+      valueVi: '200.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI2',
+      type: 'price',
+      valueEn: '250.000',
+      valueVi: '250.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI3',
+      type: 'price',
+      valueEn: '300.000',
+      valueVi: '300.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI4',
+      type: 'price',
+      valueEn: '350.000',
+      valueVi: '350.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI5',
+      type: 'price',
+      valueEn: '400.000',
+      valueVi: '400.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI6',
+      type: 'price',
+      valueEn: '450.000',
+      valueVi: '450.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRI7',
+      type: 'price',
+      valueEn: '500.000',
+      valueVi: '500.000',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PAY1',
+      type: 'payment',
+      valueEn: 'Cash',
+      valueVi: 'Tiền mặt',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PAY2',
+      type: 'payment',
+      valueEn: 'Credit card',
+      valueVi: 'Thẻ ATM',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PAY3',
+      type: 'payment',
+      valueEn: 'Cash and Credit card',
+      valueVi: 'Tiền mặt và Thẻ ATM',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO1',
+      type: 'province',
+      valueEn: 'Ha Noi',
+      valueVi: 'Hà Nội',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO2',
+      type: 'province',
+      valueEn: 'Ho Chi Minh',
+      valueVi: 'Hồ Chí Minh',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO3',
+      type: 'province',
+      valueEn: 'Da Nang',
+      valueVi: 'Đà Nẵng',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO4',
+      type: 'province',
+      valueEn: 'Thua Thien Hue',
+      valueVi: 'Thừa Thiên Huế',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO5',
+      type: 'province',
+      valueEn: 'Vinh Long',
+      valueVi: 'Vĩnh Long',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO6',
+      type: 'province',
+      valueEn: 'Hai Duong',
+      valueVi: 'Hải Dương',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO7',
+      type: 'province',
+      valueEn: 'Can Tho',
+      valueVi: 'Cần Thơ',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO8',
+      type: 'province',
+      valueEn: 'Khanh Hoa',
+      valueVi: 'Khánh Hòa',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO9',
+      type: 'province',
+      valueEn: 'Vung Tau',
+      valueVi: 'Vũng Tàu',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      keyMap: 'PRO10',
+      type: 'province',
+      valueEn: 'Dong Nai',
+      valueVi: 'Đồng Nai',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }]);
   },
 
