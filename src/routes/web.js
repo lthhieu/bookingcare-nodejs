@@ -3,6 +3,7 @@ import homeController from '../controllers/homeController'
 import userController from '../controllers/userController'
 import doctorController from '../controllers/doctorController'
 import patientController from '../controllers/patientController'
+import specialtyController from '../controllers/specialtyController'
 
 let router = express.Router()
 
@@ -37,6 +38,11 @@ let initWebRoutes = (app) => {
 
     router.post('/api/create-appointment', patientController.createAppointment)
     router.post('/api/verify-booking', patientController.verifyBooking)
+
+    router.post('/api/create-specialty', specialtyController.createSpecialty)
+    router.get('/api/fetch-specialty-home', specialtyController.fetchSpecialtyHome)
+    router.get('/api/fetch-all-name-specialties', specialtyController.fetchAllNameSpecialties)
+
     return app.use('/', router)
 }
 module.exports = initWebRoutes

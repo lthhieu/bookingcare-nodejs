@@ -19,6 +19,26 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
+      // specialtyId: {
+      //   // allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'Specialties',
+      //     key: 'id'
+      //   },
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE'
+      // },
+      // clinicId: {
+      //   // allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'Clinics',
+      //     key: 'id'
+      //   },
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE'
+      // },
       priceId: {
         allowNull: false,
         type: Sequelize.STRING,

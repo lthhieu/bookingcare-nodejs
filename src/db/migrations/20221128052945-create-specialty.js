@@ -15,14 +15,20 @@ module.exports = {
       nameEn: {
         type: Sequelize.STRING
       },
-      descriptionVi: {
-        type: Sequelize.TEXT
+      contentHtmlEn: {
+        type: Sequelize.TEXT('long')
       },
-      descriptionEn: {
-        type: Sequelize.TEXT
+      contentHtmlVi: {
+        type: Sequelize.TEXT('long')
+      },
+      contentMarkDownEn: {
+        type: Sequelize.TEXT('long')
+      },
+      contentMarkDownVi: {
+        type: Sequelize.TEXT('long')
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.BLOB('long')
       },
       createdAt: {
         allowNull: false,

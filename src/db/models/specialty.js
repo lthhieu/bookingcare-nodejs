@@ -11,16 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Specialty.belongsTo(models.Doctor_Clinic_Specialty, { foreignKey: 'id', targetKey: 'specialtyId', as: 'specialtyData' })
+
       Specialty.hasOne(models.Post, { foreignKey: 'specialtyId', as: 'specialtyPostData' })
+      // Specialty.hasMany(models.Doctor_Info, { foreignKey: 'specialtyId', as: 'doctorInfoSpecialtyData' })
+      Specialty.hasOne(models.Doctor_Clinic_Specialty, { foreignKey: 'specialtyId', as: 'specialtyData' })
+
     }
   }
   Specialty.init({
     nameVi: DataTypes.STRING,
     nameEn: DataTypes.STRING,
-    descriptionVi: DataTypes.TEXT,
-    descriptionEn: DataTypes.TEXT,
-    image: DataTypes.STRING
+    contentHtmlEn: DataTypes.TEXT('long'),
+    contentHtmlVi: DataTypes.TEXT('long'),
+    contentMarkDownEn: DataTypes.TEXT('long'),
+    contentMarkDownVi: DataTypes.TEXT('long'),
+    image: DataTypes.BLOB('long')
   }, {
     sequelize,
     modelName: 'Specialty',

@@ -60,8 +60,9 @@ let getNameAllDoctorsService = (data) => {
 let createOrUpdateDoctorInfoService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { doctorId, contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, action, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn, priceId, paymentId, provinceId } = data
-            if (!(doctorId && contentHtmlVi && contentHtmlEn && contentMarkDownVi && contentMarkDownEn && action && nameClinicVi && nameClinicEn && addressClinicVi && addressClinicEn && noteVi && noteEn && priceId && paymentId && provinceId)) {
+            let { doctorId, contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, action, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn, priceId, paymentId, provinceId, specialtyId, clinicId } = data
+            let arr = [doctorId, contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, action, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn, priceId, paymentId, provinceId, specialtyId, clinicId]
+            if (!utils.Func.isValid(arr)) {
                 resolve({
                     errCode: '1',
                     msg: 'Missing params'
@@ -71,6 +72,7 @@ let createOrUpdateDoctorInfoService = (data) => {
                 if (action === utils.CRUD.CREATE) {
                     await db.Post.create({ contentHtmlVi, contentHtmlEn, descriptionVi, descriptionEn, contentMarkDownVi, contentMarkDownEn, doctorId })
                     await db.Doctor_Info.create({ doctorId, priceId, provinceId, paymentId, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn })
+                    await db.Doctor_Clinic_Specialty.create({ doctorId, specialtyId })
                     resolve({
                         errCode: '0',
                         msg: utils.ALERTS.CREATE
@@ -78,6 +80,7 @@ let createOrUpdateDoctorInfoService = (data) => {
                 } else if (action === utils.CRUD.UPDATE) {
                     let post = await db.Post.findOne({ where: { doctorId } })
                     let doctor_info = await db.Doctor_Info.findOne({ where: { doctorId } })
+                    let doctor_clinic_specialty = await db.Doctor_Clinic_Specialty.findOne({ where: { doctorId } })
                     if (!post) {
                         resolve({
                             errCode: '1',
@@ -93,6 +96,13 @@ let createOrUpdateDoctorInfoService = (data) => {
                         } else {
                             await db.Doctor_Info.update(
                                 { priceId, provinceId, paymentId, nameClinicVi, nameClinicEn, addressClinicVi, addressClinicEn, noteVi, noteEn }, {
+                                where: { doctorId }
+                            })
+                        }
+                        if (!doctor_clinic_specialty) {
+                            await db.Doctor_Clinic_Specialty.create({ doctorId, specialtyId })
+                        } else {
+                            await db.Doctor_Clinic_Specialty.update({ specialtyId }, {
                                 where: { doctorId }
                             })
                         }
@@ -200,17 +210,17 @@ let fetchDoctorDetailInfoByIDService = (data) => {
                     where: { id },
                     attributes: { exclude: ['password'] },
                     include: [
+                        {
+                            model: db.Doctor_Clinic_Specialty, as: 'doctorData', attributes: ['specialtyId']
+                        },
                         //1 api: get contentHtmlVi, contentHtmlEn
                         { model: db.Post, as: 'userPostData', attributes: ['contentHtmlVi', 'contentHtmlEn', 'descriptionVi', 'descriptionEn', 'contentMarkDownVi', 'contentMarkDownEn'] },
                         //1 api: get contentHtmlVi, contentHtmlEn
                         { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] },
                         {
                             //1 api: get priceVi,priceEn, addressVi,addressEn, nameclinicVi,nameclinicEn,noteVi,noveEn
-                            model: db.Doctor_Info, as: 'doctorInfoData', attributes: ['priceId', 'provinceId', 'paymentId', 'nameClinicVi', 'nameClinicEn', 'addressClinicVi', 'addressClinicEn', 'noteVi', 'noteEn'],
-                            include: [{ model: db.Allcode, as: 'priceDoctorData', attributes: ['valueVi', 'valueEn'] },
-                            { model: db.Allcode, as: 'provinceData', attributes: ['valueVi', 'valueEn'] },
-                            { model: db.Allcode, as: 'paymentData', attributes: ['valueVi', 'valueEn'] }
-                            ]
+                            model: db.Doctor_Info, as: 'doctorInfoData', attributes: ['priceId', 'provinceId', 'paymentId', 'nameClinicVi', 'nameClinicEn', 'addressClinicVi', 'addressClinicEn', 'noteVi', 'noteEn']
+
                             //1 api: get priceVi,priceEn, addressVi,addressEn, nameclinicVi,nameclinicEn,noteVi,noveEn
                         }
                     ],

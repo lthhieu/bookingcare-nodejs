@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Allcode, { foreignKey: 'positionId', targetKey: 'keyMap', as: 'positionData' })
       User.belongsTo(models.Allcode, { foreignKey: 'genderId', targetKey: 'keyMap', as: 'genderData' })
       User.belongsTo(models.Allcode, { foreignKey: 'roleId', targetKey: 'keyMap', as: 'roleData' })
-      User.belongsTo(models.Doctor_Clinic_Specialty, { foreignKey: 'id', targetKey: 'doctorId', as: 'userData' })
+
       User.hasMany(models.History, { foreignKey: 'doctorId', as: 'userHistorydoctorIdData' })
       User.hasMany(models.History, { foreignKey: 'patientId', as: 'userHistorypatientIdData' })
       User.hasOne(models.Post, { foreignKey: 'doctorId', as: 'userPostData' })
@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Booking, { foreignKey: 'doctorId', as: 'userBookingDoctorIdData' })
       User.hasMany(models.Booking, { foreignKey: 'patientId', as: 'userBookingpatientIdData' })
       User.hasOne(models.Doctor_Info, { foreignKey: 'doctorId', as: 'doctorInfoData' })
+      User.hasOne(models.Doctor_Clinic_Specialty, { foreignKey: 'doctorId', as: 'doctorData' })
+
     }
   }
   User.init({
