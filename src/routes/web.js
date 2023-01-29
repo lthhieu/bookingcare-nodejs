@@ -42,6 +42,8 @@ let initWebRoutes = (app) => {
     router.post('/api/create-specialty', specialtyController.createSpecialty)
     router.get('/api/fetch-specialty-home', specialtyController.fetchSpecialtyHome)
     router.get('/api/fetch-all-name-specialties', specialtyController.fetchAllNameSpecialties)
+    router.get('/api/fetch-specialty-detail', specialtyController.fetchSpecialtyDetail)
+
 
     return app.use('/', router)
 }

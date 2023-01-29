@@ -61,6 +61,63 @@ let fetchAllNameSpecialtiesService = (data) => {
         } catch (e) { reject(e) }
     })
 }
+let fetchSpecialtyDetailService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let id = data.id
+            let location = data.location
+            if (!id || !location) {
+                resolve({
+                    errCode: '1',
+                    errMsg: 'Missing params'
+                })
+            } else {
+                let data = await db.Specialty.findOne({
+                    where: { id },
+                    attributes: ['nameVi', 'nameEn', 'id', 'contentHtmlEn', 'contentHtmlVi', 'image']
+                })
+                if (!data) { data = [] }
+                else {
+                    let DoctorsId = await db.Doctor_Clinic_Specialty.findAll({
+                        where: { specialtyId: data.id },
+                        attributes: ['doctorId']
+                    })
+                    if (!DoctorsId) { DoctorsId = [] }
+                    else {
+                        let arrDoctorId = DoctorsId.map(({ doctorId }) => doctorId)
+                        if (location === 'ALL') {
+                            resolve({
+                                errCode: '0',
+                                data, arrDoctorId
+                            })
+                        } else {
+                            //find by location
+                            let arr = []
+                            for (let i = 0; i < arrDoctorId.length; i++) {
+                                let arrDoctorIdByLocation = await db.Doctor_Info.findOne({
+                                    where: { doctorId: arrDoctorId[i], provinceId: location },
+                                    attributes: ['doctorId']
+                                })
+                                arr.push(arrDoctorIdByLocation)
+                            }
+
+                            if (arr && arr.length > 0) {
+                                arrDoctorId = arr.filter(val => val).map(val => val.doctorId)
+                            }
+                            resolve({
+                                errCode: '0',
+                                data, arrDoctorId
+                            })
+                        }
+                    }
+                    resolve({ errCode: '0', data })
+                }
+                resolve({ errCode: '0', data })
+            }
+        } catch (e) { reject(e) }
+    })
+}
 module.exports = {
-    createSpecialtyService, fetchSpecialtyHomeService, fetchAllNameSpecialtiesService
+    createSpecialtyService, fetchSpecialtyHomeService, fetchAllNameSpecialtiesService,
+    fetchSpecialtyDetailService
 }

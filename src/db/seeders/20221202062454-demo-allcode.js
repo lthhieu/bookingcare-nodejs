@@ -248,62 +248,6 @@ module.exports = {
       valueVi: 'Hồ Chí Minh',
       createdAt: new Date(),
       updatedAt: new Date()
-    }, {
-      keyMap: 'PRO3',
-      type: 'province',
-      valueEn: 'Da Nang',
-      valueVi: 'Đà Nẵng',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO4',
-      type: 'province',
-      valueEn: 'Thua Thien Hue',
-      valueVi: 'Thừa Thiên Huế',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO5',
-      type: 'province',
-      valueEn: 'Vinh Long',
-      valueVi: 'Vĩnh Long',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO6',
-      type: 'province',
-      valueEn: 'Hai Duong',
-      valueVi: 'Hải Dương',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO7',
-      type: 'province',
-      valueEn: 'Can Tho',
-      valueVi: 'Cần Thơ',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO8',
-      type: 'province',
-      valueEn: 'Khanh Hoa',
-      valueVi: 'Khánh Hòa',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO9',
-      type: 'province',
-      valueEn: 'Vung Tau',
-      valueVi: 'Vũng Tàu',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      keyMap: 'PRO10',
-      type: 'province',
-      valueEn: 'Dong Nai',
-      valueVi: 'Đồng Nai',
-      createdAt: new Date(),
-      updatedAt: new Date()
     }]);
   },
 

@@ -153,7 +153,12 @@ let fetchDoctorProfileService = (data) => {
                     where: { id },
                     attributes: ['fNameVi', 'fNameEn', 'lNameVi', 'lNameEn', 'image', 'positionId'],
                     include: [{ model: db.Post, as: 'userPostData', attributes: ['descriptionVi', 'descriptionEn'] },
-                    { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] }],
+                    { model: db.Allcode, as: 'positionData', attributes: ['valueVi', 'valueEn'] },
+                    {
+                        model: db.Doctor_Info, as: 'doctorInfoData', attributes: ['provinceId'], include: [{
+                            model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi']
+                        }]
+                    }],
                     raw: false,
                     nest: true
                 })

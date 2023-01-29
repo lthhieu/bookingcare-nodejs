@@ -38,6 +38,18 @@ let fetchAllNameSpecialties = async (req, res) => {
         })
     }
 }
+let fetchSpecialtyDetail = async (req, res) => {
+    try {
+        let data = await specialtyService.fetchSpecialtyDetailService(req.query)
+        return res.status(200).json(data)
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: '-1',
+            msg: 'Error from server..'
+        })
+    }
+}
 module.exports = {
-    createSpecialty, fetchSpecialtyHome, fetchAllNameSpecialties
+    createSpecialty, fetchSpecialtyHome, fetchAllNameSpecialties, fetchSpecialtyDetail
 }
